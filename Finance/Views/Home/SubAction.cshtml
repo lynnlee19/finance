@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Finance.Models.ViewModels.JournalViewModel>
+
+@{
+    Layout = "";
+}
+
+<p>
+        @Html.ActionLink("建立新交易", "Create")
+    </p>
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TxnDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TxnType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TxnAmt)
+        </th>
+    </tr>
+    @{
+        int i = 0;
+        foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <td>
+                    @i
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TxnDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TxnType)
+                </td>
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => item.TxnAmt)
+                </td>
+                @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>*@
+            </tr>
+        }
+    }
+
+</table>
+

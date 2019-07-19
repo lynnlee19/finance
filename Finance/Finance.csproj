@@ -136,17 +136,35 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\MappingConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\JournalController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountBook.cs" />
+    <Compile Include="Models\AccountBook.cs">
+      <DependentUpon>SkillTreeEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DAO\AccountBookDAO.cs" />
     <Compile Include="Models\Maps\JournalMap.cs" />
+    <Compile Include="Models\SkillTreeEF.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SkillTreeEF.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SkillTreeEF.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SkillTreeEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SkillTreeEF.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SkillTreeEF.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\ViewModels\JournalViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\AccountBookService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SkillTreeHomework.mdf" />
@@ -161,8 +179,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\SkillTreeEF.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SkillTreeEF.edmx</DependentUpon>
+      <LastGenOutput>SkillTreeEF.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SkillTreeEF.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SkillTreeEF.edmx</DependentUpon>
+      <LastGenOutput>SkillTreeEF.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\SkillTreeEF.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SkillTreeEF.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SkillTreeEF.edmx.diagram">
+      <DependentUpon>SkillTreeEF.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -188,8 +223,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Journal\Index.cshtml" />
-    <Content Include="Views\Journal\SubAction.cshtml" />
+    <Content Include="Views\Home\SubAction.cshtml" />
+    <Content Include="Views\Home\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
