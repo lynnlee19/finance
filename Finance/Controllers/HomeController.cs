@@ -1,23 +1,42 @@
 ﻿using Dapper.FluentMap;
 using Finance.Models;
 using Finance.Models.Maps;
+using Finance.Models.ViewModels;
+using Finance.Repository;
 using Finance.Service;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Finance.Helper;
 
 namespace Finance.Controllers
 {
     public class HomeController : Controller
     {
-        private AccountBookDAO dao = new AccountBookDAO();
         private readonly AccountBookService _AccountBookService;
+        private readonly LogService _LogService;
+        private readonly UnitOfWork _unitOfWork;
 
         public HomeController()
         {
-            _AccountBookService = new AccountBookService();
+            _unitOfWork = new UnitOfWork();
+            _AccountBookService = new AccountBookService(_unitOfWork);
+            _LogService = new LogService(_unitOfWork);
+        }
+        private IList<SelectListItem> GetCategoryList()
+        {
+            IList<SelectListItem> list = Enum.GetValues(typeof(EnumTxnType))
+                        .Cast<EnumTxnType>()
+                        .Select(x => new SelectListItem
+                        {
+                            Text = Tools.GetEnumDescription(x),
+                            Value = ((int)x).ToString()
+                        })
+                        .ToList();
+            return list;
         }
         public ActionResult Index()
         {
@@ -25,39 +44,33 @@ namespace Finance.Controllers
         }
         public ActionResult Create()
         {
+            IList<SelectListItem> list =this.GetCategoryList();
+            ViewData["categoryList"] = list;
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AccountBook accountBook)
+        public ActionResult Create([Bind(Exclude = "Id")]AccountBook accountBook)
         {
-            
+
             if (ModelState.IsValid)
             {
                 accountBook.Id = Guid.NewGuid();
                 _AccountBookService.Add(accountBook);
-                _AccountBookService.Save();
+                _LogService.Add(ControllerContext.RouteData.Values["action"].ToString(), "Id=" + accountBook.Id.ToString());
+
+                //_AccountBookService.Save();
+                //_LogService.Save();
+                _unitOfWork.Commit();
                 return RedirectToAction("Index");
             }
 
+            IList<SelectListItem> list = this.GetCategoryList();
+            ViewData["categoryList"] = list;
             return View(accountBook);
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-        [ChildActionOnly]
-        public ActionResult SubAction()
+        //[ChildActionOnly]
+        public ActionResult List()
         {
 
             //var faker = new Faker("zh_TW");
@@ -80,5 +93,19 @@ namespace Finance.Controllers
 
             return View(_AccountBookService.GetAll());
         }
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
     }
 }

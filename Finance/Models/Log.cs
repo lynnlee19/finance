@@ -12,12 +12,11 @@ namespace Finance.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AccountBook
+    public partial class Log
     {
-        public System.Guid Id { get; set; }
-        public int Categoryyy { get; set; }
-        public int Amounttt { get; set; }
-        public System.DateTime Dateee { get; set; }
-        public string Remarkkk { get; set; }
+        public int Id { get; set; }
+        public string TxnCode { get; set; }
+        public string TxnDetail { get; set; }
+        public Nullable<System.DateTime> LogDate { get; set; }
     }
 }

@@ -6,12 +6,12 @@ using System.Web;
 
 namespace Finance.Models.ViewModels
 {
-    public enum EnumTxnType { 收入 = 1, 支出 = 2 };
-
-    public class JournalViewModel: IComparable<JournalViewModel>
+    
+    public class JournalViewModel
+        //: IComparable<JournalViewModel>
     {
-        [Display(Name = "日期", Description = "交易日期")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [Display(Name = "日期", Description = "交易日期")]        
         public System.DateTime TxnDate { get; set; }
 
         [Display(Name = "類別", Description = "類別")]
@@ -20,17 +20,17 @@ namespace Finance.Models.ViewModels
         [Display(Name = "備註", Description = "交易備註")]
         public string Description { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
         [Display(Name = "金額", Description = "交易金額")]
-        public decimal TxnAmt { get; set; }
+        public decimal TxnAmt { get; set; }        
+        
+        //public int CompareTo(JournalViewModel other)
+        //{
+        //    if (other == null)
+        //        return 1;
 
-        public int CompareTo(JournalViewModel other)
-        {
-            if (other == null)
-                return 1;
-
-            else
-                return this.TxnDate.CompareTo(other.TxnDate);
-        }
+        //    else
+        //        return this.TxnDate.CompareTo(other.TxnDate);
+        //}
     }
 }

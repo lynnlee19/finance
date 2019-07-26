@@ -113,11 +113,12 @@ namespace Finance.Models
         {
             var result = new List<JournalViewModel>();
 
-            const string sqlStatement = @"  Select Id, Dateee,
+            const string sqlStatement = @"  Select TOP 20 Id, Dateee,
                                                  case Categoryyy when '0' then '1' else '2' end as Categoryyy, 
                                                  Amounttt, Remarkkk
                                             From AccountBook
-                                            Order by Dateee";
+                                            WHERE Dateee>='2019/7/1'
+                                            Order by Dateee desc";
 
             using (var conn = new SqlConnection(this.ConnectionString))
             {
@@ -150,6 +151,7 @@ namespace Finance.Models
             }
             return result;
         }
+        
     }
    
 }

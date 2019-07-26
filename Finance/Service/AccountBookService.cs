@@ -1,5 +1,6 @@
 ﻿using Finance.Models;
 using Finance.Models.ViewModels;
+using Finance.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,19 @@ namespace Finance.Service
 {
     public class AccountBookService
     {
-        private readonly SkillTreeHomeworkEntities _db;
+        //private readonly SkillTreeHomeworkEntities _db;
         private AccountBookDAO _dao;
 
-        public AccountBookService()
+        //public AccountBookService()
+        //{
+        //    _db = new SkillTreeHomeworkEntities();
+        //    _dao = new AccountBookDAO();
+        //}
+        
+        private readonly IRepository<AccountBook> _accountBookRepository;
+        public AccountBookService(IUnitOfWork unitOfWork)
         {
-            _db = new SkillTreeHomeworkEntities();
+            _accountBookRepository = new Repository<AccountBook>(unitOfWork);
             _dao = new AccountBookDAO();
         }
 
@@ -30,7 +38,8 @@ namespace Finance.Service
 
         public void Add(AccountBook accountbook)
         {
-            _db.AccountBook.Add(accountbook);
+            //_dao.AccountBook.Add(accountbook);
+            _accountBookRepository.Create(accountbook);
         }
 
         public void Edit(AccountBook pageData, AccountBook oldData)
@@ -43,12 +52,13 @@ namespace Finance.Service
 
         public void Delete(AccountBook accountBook)
         {
-            _db.AccountBook.Remove(accountBook);
+            //_dao.AccountBook.Remove(accountBook);
+            _accountBookRepository.Remove(accountBook);
         }
 
-        public void Save()
-        {
-            _db.SaveChanges();
-        }
+        //public void Save()
+        //{
+        //    _dao.SaveChanges();
+        //}
     }
 }

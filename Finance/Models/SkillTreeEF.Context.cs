@@ -26,5 +26,6 @@ namespace Finance.Models
         }
     
         public virtual DbSet<AccountBook> AccountBook { get; set; }
+        public virtual DbSet<Log> Log { get; set; }
     }
 }
