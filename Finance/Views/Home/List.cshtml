@@ -37,8 +37,7 @@
                 @Html.DisplayFor(modelItem => item.TxnDate)
             </td>
             <td class="@Html.DisplayCategoryColor(item.TxnType)">
-                @*@Html.DisplayFor(modelItem => item.TxnType)*@
-                @Tools.GetEnumDescription(item.TxnType)
+                 @Tools.GetEnumDescription(item.TxnType)
             </td>
             <td>                
                 @Html.DisplayFor(modelItem => item.TxnAmt)

@@ -22,7 +22,6 @@ namespace Finance.Helper
                 className = "text-danger";
             }
 
-            // return new MvcHtmlString($"<span class='text-{className}'>{scores}</span>");
             return className;
         }
     }
